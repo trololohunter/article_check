@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="article_check"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/vover/CLionProjects/article_check/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/vover/CLionProjects/article_check/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/vover/CLionProjects/article_check/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="article_check">
+				<Option output="/home/vover/CLionProjects/article_check/cmake-build-debug/article_check" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vover/CLionProjects/article_check/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 article_check"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="article_check/fast">
+				<Option output="/home/vover/CLionProjects/article_check/cmake-build-debug/article_check" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vover/CLionProjects/article_check/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 article_check/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/vover/CLionProjects/article_check/case.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/case.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/functions.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/functions.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/gas_two.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/gas_two.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/gnuploting.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/gnuploting.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/eigenval.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/eigenval.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/elcmp.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/errhandl.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/errhandl.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/factor.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/factor.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/itersolv.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/itersolv.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/lastypes.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/matrix.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/matrix.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/mlsolv.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/mlsolv.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/operats.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/operats.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/precond.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/precond.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/qmatrix.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/qmatrix.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/rtc.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/rtc.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/vector.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/laspack/vector.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/main.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/residuals.c">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/residuals.h">
+			<Option target="article_check"/>
+		</Unit>
+		<Unit filename="/home/vover/CLionProjects/article_check/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
