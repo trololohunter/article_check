@@ -108,21 +108,22 @@ int son (int i, int j, P_she *p_s) //  the status of the node
 {
     if (i == 0 && j == 0) // x = 0; y = 0
         return 5;
-    if (i == p_s->M_y-1 && j == 0) // x = 0; y = b
+    if (i == p_s->M_y && j == 0) // x = 0; y = b
         return 7;
-    if (i == 0 && j == p_s->M_x - 1) // x = a; y = 0;
+    if (i == 0 && j == p_s->M_x) // x = a; y = 0;
         return 6;
-    if (i == p_s->M_y - 1 && j == p_s->M_x - 1) // x = a; y = b
+    if (i == p_s->M_y-1 && j == p_s->M_x-1)
         return 8;
-    //if (i > 0 && i < (p_s->M_y/2) && j == p_s->M_x/2) // Interpretation
-    //    return 9;
+        // x
+        //if (i > 0 && i < (p_s->M_y/2) && j == p_s->M_x/2) // Interpretation
+        //    return 9; = a; y = b
     if (i == 0 && j > 0 && j < p_s->M_x-1) // x in; y = 0
         return 3;
-    if (i == p_s->M_y && j >= 0 && j < p_s->M_x) // x in; y = b
+    if (i == p_s->M_y && j > 0 && j < p_s->M_x-1) // x in; y = b
         return 4;
     if (i > 0 && i < p_s->M_y-1 && j == 0) // x = 0; y in
         return 1;
-    if (i >= 0 && i < p_s->M_y && j == p_s->M_x) // x = a; y in
+    if (i > 0 && i < p_s->M_y-1 && j == p_s->M_x) // x = a; y in
         return 2;
    // if (i == 0 && j > p_s->M_x/2-1 && j < p_s->M_x)
     //    return 10;
@@ -256,18 +257,18 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
                     mm = case4(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
                     break;
                 case 5:
-                    mm = case1(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    mm = case5(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
                     break;
                 case 6:
-                    mm = case2(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    mm = case6(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
                     break;
                 case 7:
-                    mm = case1(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    mm = case7(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
                     break;
                 case 8:
-                    mm = case2(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
-                    break; /*
-                case 9:
+                    mm = case8(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                /*case 9:
                     mm = case0(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
                     break;
                 case 10:
