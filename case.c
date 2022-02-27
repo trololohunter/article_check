@@ -2,6 +2,7 @@
 // Created by vover on 3/26/18.
 //
 
+#include <stdio.h>
 #include "gas_two.h"
 #include "laspack/itersolv.h"
 #include "functions.h"
@@ -38,6 +39,27 @@ typedef struct
     double v2RR;
 
 } gv1v2;
+
+void printl_m_s (MM_step m_s, int m) {
+    printf("m = %d \n", m);
+    printf("mmp00 = %d \n", m_s.mmp00);
+    printf("mmpL0 = %d \n", m_s.mmpL0);
+    printf("mmp0L = %d \n", m_s.mmp0L);
+    printf("mmv100 = %d \n", m_s.mmv100);
+    printf("mmv1R0 = %d \n", m_s.mmv1R0);
+    printf("mmv1L0 = %d \n", m_s.mmv1L0);
+    printf("mmv10R = %d \n", m_s.mmv10R);
+    printf("mmv10L = %d \n", m_s.mmv10L);
+    printf("mmv1RL = %d \n", m_s.mmv1RL);
+    printf("mmv200 = %d \n", m_s.mmv200);
+    printf("mmv2R0 = %d \n", m_s.mmv2R0);
+    printf("mmv2L0 = %d \n", m_s.mmv2L0);
+    printf("mmv20R = %d \n", m_s.mmv20R);
+    printf("mmv20L = %d \n", m_s.mmv20L);
+    printf("mmv2LR = %d \n", m_s.mmv2LR);
+    printf("m = %d \n", m);
+    printf("\n");
+}
 
 void first_fill(double *V1, double *V2, double *G, P_she p_s, double w, func u1, func u2, func ro) {
     int i, j;
@@ -131,6 +153,8 @@ size_t case0 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 {
     double tmp;
 
+    printl_m_s(m_s, m);
+
     Q_SetLen(A, mm, 5);
     Q_SetEntry(A, mm, 0, mm, 1.);
     Q_SetEntry(A, mm, 1, m_s.mmv1R0, t_c.ro0hx );
@@ -170,12 +194,12 @@ size_t case0 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     Q_SetEntry(A, mm, 1, m_s.mmv100, t_c.thxy);
     Q_SetEntry(A, mm, 2, m_s.mmp00, t_c.crohy);
     Q_SetEntry(A, mm, 3, m_s.mmp0L, -t_c.crohy);
-    Q_SetEntry(A, mm, 4, m_s.mmv20R, -t_c.thxx43);
+    Q_SetEntry(A, mm, 4, m_s.mmv20R, -t_c.thyy43);
     Q_SetEntry(A, mm, 5, m_s.mmv1R0, -t_c.thxy);
     Q_SetEntry(A, mm, 6, m_s.mmv1RL, t_c.thxy);
-    Q_SetEntry(A, mm, 7, m_s.mmv20L, -t_c.thxx43);
-    Q_SetEntry(A, mm, 8, m_s.mmv2R0, -t_c.thyymu);
-    Q_SetEntry(A, mm, 9, m_s.mmv2L0, -t_c.thyymu);
+    Q_SetEntry(A, mm, 7, m_s.mmv20L, -t_c.thyy43);
+    Q_SetEntry(A, mm, 8, m_s.mmv2R0, -t_c.thxxmu);
+    Q_SetEntry(A, mm, 9, m_s.mmv2L0, -t_c.thxxmu);
     Q_SetEntry(A, mm, 10, m_s.mmv10L, -t_c.thxy);
 
     tmp = ro0 * V2[m];
@@ -190,6 +214,7 @@ size_t case1 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 {
     double tmp;
 
+    printl_m_s(m_s, m);
 
     Q_SetLen(A, mm, 5);
     Q_SetEntry(A, mm, 0, mm, 1.);
@@ -218,11 +243,11 @@ size_t case1 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     Q_SetEntry(A, mm, 1, m_s.mmv100, t_c.thxy); //0
     Q_SetEntry(A, mm, 2, m_s.mmp00, t_c.crohy);
     Q_SetEntry(A, mm, 3, m_s.mmp0L, -t_c.crohy);
-    Q_SetEntry(A, mm, 4, m_s.mmv20R, -t_c.thxx43);
+    Q_SetEntry(A, mm, 4, m_s.mmv20R, -t_c.thyy43);
     Q_SetEntry(A, mm, 5, m_s.mmv1R0, -t_c.thxy);
     Q_SetEntry(A, mm, 6, m_s.mmv1RL, t_c.thxy);
-    Q_SetEntry(A, mm, 7, m_s.mmv20L, -t_c.thxx43);
-    Q_SetEntry(A, mm, 8, m_s.mmv2R0, -t_c.thyymu);
+    Q_SetEntry(A, mm, 7, m_s.mmv20L, -t_c.thyy43);
+    Q_SetEntry(A, mm, 8, m_s.mmv2R0, -t_c.thxxmu);
     Q_SetEntry(A, mm, 9, m_s.mmv10L, -t_c.thxy);
 
 
@@ -238,6 +263,8 @@ size_t case2 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 {
     double tmp;
 
+    printl_m_s(m_s, m);
+
     Q_SetLen(A, mm, 1);
     Q_SetEntry(A, mm, 0, mm, 1.);
     V_SetCmp(B, mm, 0.);
@@ -251,6 +278,8 @@ size_t case3 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 {
     double tmp;
 
+    printl_m_s(m_s, m);
+
     Q_SetLen(A, mm, 5);
     Q_SetEntry(A, mm, 0, mm, 1.);
     Q_SetEntry(A, mm, 1, m_s.mmv1R0, t_c.ro0hx );
@@ -263,7 +292,7 @@ size_t case3 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 
     mm++;
 
-    Q_SetLen(A, mm, 11);
+    Q_SetLen(A, mm, 10);
 
     tmp = ro0 + 2 * t_c.thxx43 + t_c.thyymu;
     Q_SetEntry(A, mm, 0, mm, tmp); //mm=mmv100
@@ -283,7 +312,7 @@ size_t case3 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     mm++;
 
     Q_SetLen(A, mm, 1);
-    Q_SetEntry(A, mm, 0, mm, 1.); //mm=mmv100
+    Q_SetEntry(A, mm, 0, mm, 1.); //mm=mmv200
     V_SetCmp(B, mm, 0.);
 
 
@@ -294,6 +323,8 @@ size_t case4 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
               double *V1, double *V2, double *P, int m, P_she p_s, double ro0, size_t mm)
 {
     double tmp;
+
+    printl_m_s(m_s, m);
 
     Q_SetLen(A, mm, 1);
     Q_SetEntry(A, mm, 0, mm, 1.);
@@ -307,6 +338,8 @@ size_t case5 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
                double *V1, double *V2, double *P, int m, P_she p_s, double ro0, size_t mm)
 {
     double tmp;
+
+    printl_m_s(m_s, m);
 
     Q_SetLen(A, mm, 5);
     Q_SetEntry(A, mm, 0, mm, 1.);
@@ -339,37 +372,15 @@ size_t case6 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 {
     double tmp;
 
-    Q_SetLen(A, mm, 1);
-    Q_SetEntry(A, mm, 0, mm, 1.);
-    V_SetCmp(B, mm, 0.);
+    m_s.mmv1R0 = (size_t) 3*p_s.M_x*p_s.M_y;
 
-    return mm;
-}
-
-
-size_t case7 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
-               double *V1, double *V2, double *P, int m, P_she p_s, double ro0, size_t mm)
-{
-    double tmp;
-
-    Q_SetLen(A, mm, 1);
-    Q_SetEntry(A, mm, 0, mm, 1.);
-    V_SetCmp(B, mm, 0.);
-
-    return mm;
-}
-
-
-size_t case8 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
-               double *V1, double *V2, double *P, int m, P_she p_s, double ro0, size_t mm)
-{
-    double tmp;
+    printl_m_s(m_s, m);
 
     Q_SetLen(A, mm, 5);
     Q_SetEntry(A, mm, 0, mm, 1.);
-    Q_SetEntry(A, mm, 1, (size_t) 3*p_s.M_x*p_s.M_y + p_s.M_x  /* mmv1R0 */, t_c.ro0hx );
+    Q_SetEntry(A, mm, 1, m_s.mmv1R0, t_c.ro0hx );
     Q_SetEntry(A, mm, 2, m_s.mmv100, -t_c.ro0hx);
-    Q_SetEntry(A, mm, 3, (size_t) 3*p_s.M_x*p_s.M_y + p_s.M_y + p_s.M_x  /* mmv20R */, t_c.ro0hy);
+    Q_SetEntry(A, mm, 3, m_s.mmv20R, t_c.ro0hy);
     Q_SetEntry(A, mm, 4, m_s.mmv200, -t_c.ro0hy);
 
     tmp = P[m];
@@ -384,7 +395,109 @@ size_t case8 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     Q_SetEntry(A, mm, 1, m_s.mmv200, t_c.thxy);
     Q_SetEntry(A, mm, 2, m_s.mmp00, t_c.crohx);
     Q_SetEntry(A, mm, 3, m_s.mmpL0, -t_c.crohx);
-    Q_SetEntry(A, mm, 4, (size_t) 3*p_s.M_x*p_s.M_y + p_s.M_x  /* mmv1R0 */, -t_c.thxx43);
+    Q_SetEntry(A, mm, 4, m_s.mmv1R0, -t_c.thxx43);
+    Q_SetEntry(A, mm, 5, m_s.mmv20R, -t_c.thxy);
+    Q_SetEntry(A, mm, 6, m_s.mmv2LR, t_c.thxy);
+    Q_SetEntry(A, mm, 7, m_s.mmv1L0, -t_c.thxx43);
+    Q_SetEntry(A, mm, 8, m_s.mmv10R, -t_c.thyymu);
+    Q_SetEntry(A, mm, 9, m_s.mmv2L0, -t_c.thxy);
+
+    tmp = ro0 * V1[m];
+    V_SetCmp(B, mm, tmp);
+
+    mm++;
+
+    Q_SetLen(A, mm, 1);
+    Q_SetEntry(A, mm, 0, mm, 1.); //mm=mmv200
+    V_SetCmp(B, mm, 0.);
+
+    return mm;
+}
+
+
+size_t case7 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
+               double *V1, double *V2, double *P, int m, P_she p_s, double ro0, size_t mm)
+{
+    double tmp;
+
+    m_s.mmv20R = (size_t) 3*p_s.M_x*p_s.M_y + p_s.M_y;
+
+    printl_m_s(m_s, m);
+
+    Q_SetLen(A, mm, 5);
+    Q_SetEntry(A, mm, 0, mm, 1.);
+    Q_SetEntry(A, mm, 1, m_s.mmv1R0, t_c.ro0hx );
+    Q_SetEntry(A, mm, 2, m_s.mmv100, -t_c.ro0hx);
+    Q_SetEntry(A, mm, 3, m_s.mmv20R, t_c.ro0hy);
+    Q_SetEntry(A, mm, 4, m_s.mmv200, -t_c.ro0hy);
+
+    tmp = P[m];
+    V_SetCmp(B, mm, tmp);
+
+    mm++;
+
+    Q_SetLen(A, mm, 1);
+    Q_SetEntry(A, mm, 0, mm, 1.);
+
+    tmp = ro0 * V1[m];
+    V_SetCmp(B, mm, 0.);
+
+    mm++;
+
+    Q_SetLen(A, mm, 10);
+
+    tmp = ro0+ 2 * t_c.thyy43 + t_c.thxxmu;
+    Q_SetEntry(A, mm, 0, mm, tmp); //mm=mmv200
+    Q_SetEntry(A, mm, 1, m_s.mmv100, t_c.thxy); //0
+    Q_SetEntry(A, mm, 2, m_s.mmp00, t_c.crohy);
+    Q_SetEntry(A, mm, 3, m_s.mmp0L, -t_c.crohy);
+    Q_SetEntry(A, mm, 4, m_s.mmv20R, -t_c.thyy43);
+    Q_SetEntry(A, mm, 5, m_s.mmv1R0, -t_c.thxy);
+    Q_SetEntry(A, mm, 6, m_s.mmv1RL, t_c.thxy);
+    Q_SetEntry(A, mm, 7, m_s.mmv20L, -t_c.thyy43);
+    Q_SetEntry(A, mm, 8, m_s.mmv2R0, -t_c.thxxmu);
+    Q_SetEntry(A, mm, 9, m_s.mmv10L, -t_c.thxy);
+
+
+    tmp = ro0 * V2[m];
+    V_SetCmp(B, mm, tmp);
+
+    return mm;
+}
+
+
+size_t case8 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
+               double *V1, double *V2, double *P, int m, P_she p_s, double ro0, size_t mm)
+{
+    double tmp;
+
+    m_s.mmv1R0 = (size_t) 3*p_s.M_x*p_s.M_y + p_s.M_y;
+    m_s.mmv20R = (size_t) 3*p_s.M_x*p_s.M_y + p_s.M_y + p_s.M_x - 1;
+    m_s.mmv2LR = (size_t) 3*p_s.M_x*p_s.M_y + p_s.M_x + p_s.M_y - 1 - 1;
+    m_s.mmv1RL = (size_t) 3*p_s.M_x*p_s.M_y + p_s.M_y - 1;
+
+    printl_m_s(m_s, m);
+
+    Q_SetLen(A, mm, 5);
+    Q_SetEntry(A, mm, 0, mm, 1.);
+    Q_SetEntry(A, mm, 1, m_s.mmv1R0, t_c.ro0hx );
+    Q_SetEntry(A, mm, 2, m_s.mmv100, -t_c.ro0hx);
+    Q_SetEntry(A, mm, 3, m_s.mmv20R, t_c.ro0hy);
+    Q_SetEntry(A, mm, 4, m_s.mmv200, -t_c.ro0hy);
+
+    tmp = P[m];
+    V_SetCmp(B, mm, tmp);
+
+    mm++;
+
+    Q_SetLen(A, mm, 10);
+
+    tmp = ro0 + 2 * t_c.thxx43 + t_c.thyymu;
+    Q_SetEntry(A, mm, 0, mm, tmp); //mm=mmv100
+    Q_SetEntry(A, mm, 1, m_s.mmv200, t_c.thxy);
+    Q_SetEntry(A, mm, 2, m_s.mmp00, t_c.crohx);
+    Q_SetEntry(A, mm, 3, m_s.mmpL0, -t_c.crohx);
+    Q_SetEntry(A, mm, 4, m_s.mmv1R0, -t_c.thxx43);
     Q_SetEntry(A, mm, 5, m_s.mmv20R, -t_c.thxy);
     Q_SetEntry(A, mm, 6, m_s.mmv2LR, t_c.thxy);
     Q_SetEntry(A, mm, 7, m_s.mmv1L0, -t_c.thxx43);
@@ -398,7 +511,7 @@ size_t case8 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 
     Q_SetLen(A, mm, 11);
 
-    tmp = ro0+ 2 * t_c.thyy43 + 2 * t_c.thxxmu;
+    tmp = ro0+ 2 * t_c.thyy43 + t_c.thxxmu;
     Q_SetEntry(A, mm, 0, mm, tmp); //mm=mmv200
     Q_SetEntry(A, mm, 1, m_s.mmv100, t_c.thxy);
     Q_SetEntry(A, mm, 2, m_s.mmp00, t_c.crohy);
@@ -407,9 +520,8 @@ size_t case8 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     Q_SetEntry(A, mm, 5, m_s.mmv1R0, -t_c.thxy);
     Q_SetEntry(A, mm, 6, m_s.mmv1RL, t_c.thxy);
     Q_SetEntry(A, mm, 7, m_s.mmv20L, -t_c.thxx43);
-    Q_SetEntry(A, mm, 8, m_s.mmv2R0, -t_c.thyymu);
-    Q_SetEntry(A, mm, 9, m_s.mmv2L0, -t_c.thyymu);
-    Q_SetEntry(A, mm, 10, m_s.mmv10L, -t_c.thxy);
+    Q_SetEntry(A, mm, 8, m_s.mmv2L0, -t_c.thxxmu);
+    Q_SetEntry(A, mm, 9, m_s.mmv10L, -t_c.thxy);
 
     tmp = ro0 * V2[m];
     V_SetCmp(B, mm, tmp);
@@ -539,6 +651,11 @@ size_t case11 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 {
     double tmp;
 
+    m_s.mmv20R = (size_t) 3*p_s.M_x*p_s.M_y /*+ p_s.M_y */ + m - p_s.M_x*p_s.M_y - 1;
+    m_s.mmv2LR = (size_t) 3*p_s.M_x*p_s.M_y /*+ p_s.M_y */ + m - p_s.M_x*p_s.M_y - 1 - 1;
+
+    printl_m_s(m_s, m);
+
     Q_SetLen(A, mm, 5);
     Q_SetEntry(A, mm, 0, mm, 1.);
     Q_SetEntry(A, mm, 1, m_s.mmv1R0, t_c.ro0hx );
@@ -553,7 +670,7 @@ size_t case11 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 
     Q_SetLen(A, mm, 11);
 
-    tmp = ro0 + 2 * t_c.thxx43 + 2 * t_c.thyymu;
+    tmp = ro0 + 2 * t_c.thxx43 + t_c.thyymu;
     Q_SetEntry(A, mm, 0, mm, tmp); //mm=mmv100
     Q_SetEntry(A, mm, 1, m_s.mmv200, t_c.thxy);
     Q_SetEntry(A, mm, 2, m_s.mmp00, t_c.crohx);
@@ -562,9 +679,8 @@ size_t case11 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     Q_SetEntry(A, mm, 5, m_s.mmv20R, -t_c.thxy);
     Q_SetEntry(A, mm, 6, m_s.mmv2LR, t_c.thxy);
     Q_SetEntry(A, mm, 7, m_s.mmv1L0, -t_c.thxx43);
-    Q_SetEntry(A, mm, 8, m_s.mmv10R, -t_c.thyymu);
-    Q_SetEntry(A, mm, 9, m_s.mmv10L, -t_c.thyymu);
-    Q_SetEntry(A, mm, 10, m_s.mmv2L0, -t_c.thxy);
+    Q_SetEntry(A, mm, 8, m_s.mmv10L, -t_c.thyymu);
+    Q_SetEntry(A, mm, 9, m_s.mmv2L0, -t_c.thxy);
 
     tmp = ro0 * V1[m];
     V_SetCmp(B, mm, tmp);
@@ -578,12 +694,12 @@ size_t case11 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     Q_SetEntry(A, mm, 1, m_s.mmv100, t_c.thxy);
     Q_SetEntry(A, mm, 2, m_s.mmp00, t_c.crohy);
     Q_SetEntry(A, mm, 3, m_s.mmp0L, -t_c.crohy);
-    Q_SetEntry(A, mm, 4, m_s.mmv20R, -t_c.thxx43);
+    Q_SetEntry(A, mm, 4, m_s.mmv20R, -t_c.thyy43);
     Q_SetEntry(A, mm, 5, m_s.mmv1R0, -t_c.thxy);
     Q_SetEntry(A, mm, 6, m_s.mmv1RL, t_c.thxy);
-    Q_SetEntry(A, mm, 7, m_s.mmv20L, -t_c.thxx43);
-    Q_SetEntry(A, mm, 8, m_s.mmv2R0, -t_c.thyymu);
-    Q_SetEntry(A, mm, 9, m_s.mmv2L0, -t_c.thyymu);
+    Q_SetEntry(A, mm, 7, m_s.mmv20L, -t_c.thyy43);
+    Q_SetEntry(A, mm, 8, m_s.mmv2R0, -t_c.thxxmu);
+    Q_SetEntry(A, mm, 9, m_s.mmv2L0, -t_c.thxxmu);
     Q_SetEntry(A, mm, 10, m_s.mmv10L, -t_c.thxy);
 
     tmp = ro0 * V2[m];
@@ -598,6 +714,11 @@ size_t case12 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 {
     double tmp;
 
+    m_s.mmv1R0 = (size_t) 3*p_s.M_x*p_s.M_y + m - p_s.M_x*p_s.M_y - 1;
+    m_s.mmv1RL = (size_t) 3*p_s.M_x*p_s.M_y + m - p_s.M_x*p_s.M_y - 1 - 1;
+
+    printl_m_s(m_s, m);
+
     Q_SetLen(A, mm, 5);
     Q_SetEntry(A, mm, 0, mm, 1.);
     Q_SetEntry(A, mm, 1, m_s.mmv1R0, t_c.ro0hx );
@@ -632,18 +753,17 @@ size_t case12 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 
     Q_SetLen(A, mm, 11);
 
-    tmp = ro0+ 2 * t_c.thyy43 + 2 * t_c.thxxmu;
+    tmp = ro0+ 2 * t_c.thyy43 + t_c.thxxmu;
     Q_SetEntry(A, mm, 0, mm, tmp); //mm=mmv200
     Q_SetEntry(A, mm, 1, m_s.mmv100, t_c.thxy);
     Q_SetEntry(A, mm, 2, m_s.mmp00, t_c.crohy);
     Q_SetEntry(A, mm, 3, m_s.mmp0L, -t_c.crohy);
-    Q_SetEntry(A, mm, 4, m_s.mmv20R, -t_c.thxx43);
+    Q_SetEntry(A, mm, 4, m_s.mmv20R, -t_c.thyy43);
     Q_SetEntry(A, mm, 5, m_s.mmv1R0, -t_c.thxy);
     Q_SetEntry(A, mm, 6, m_s.mmv1RL, t_c.thxy);
-    Q_SetEntry(A, mm, 7, m_s.mmv20L, -t_c.thxx43);
-    Q_SetEntry(A, mm, 8, m_s.mmv2R0, -t_c.thyymu);
-    Q_SetEntry(A, mm, 9, m_s.mmv2L0, -t_c.thyymu);
-    Q_SetEntry(A, mm, 10, m_s.mmv10L, -t_c.thxy);
+    Q_SetEntry(A, mm, 7, m_s.mmv20L, -t_c.thyy43);
+    Q_SetEntry(A, mm, 8, m_s.mmv2L0, -t_c.thxxmu);
+    Q_SetEntry(A, mm, 9, m_s.mmv10L, -t_c.thxy);
 
     tmp = ro0 * V2[m];
     V_SetCmp(B, mm, tmp);

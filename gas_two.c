@@ -108,9 +108,9 @@ int son (int i, int j, P_she *p_s) //  the status of the node
 {
     if (i == 0 && j == 0) // x = 0; y = 0
         return 5;
-    if (i == p_s->M_y && j == 0) // x = 0; y = b
+    if (i == p_s->M_y-1 && j == 0) // x = 0; y = b
         return 7;
-    if (i == 0 && j == p_s->M_x) // x = a; y = 0;
+    if (i == 0 && j == p_s->M_x-1) // x = a; y = 0;
         return 6;
     if (i == p_s->M_y-1 && j == p_s->M_x-1)
         return 8;
