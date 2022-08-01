@@ -8,180 +8,180 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/vover/CLionProjects/article_check/cmake-build-debug"/>
+				<Option working_dir="D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="rebuild_cache">
-				<Option working_dir="/home/vover/CLionProjects/article_check/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="/home/vover/CLionProjects/article_check/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="article_check">
-				<Option output="/home/vover/CLionProjects/article_check/cmake-build-debug/article_check" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/vover/CLionProjects/article_check/cmake-build-debug"/>
+				<Option output="D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/article_check.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/include/x86_64-linux-gnu"/>
-					<Add directory="/usr/include"/>
+					<Add directory="D:/progs/CLion 2021.3.3/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include"/>
+					<Add directory="D:/progs/CLion 2021.3.3/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../include"/>
+					<Add directory="D:/progs/CLion 2021.3.3/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed"/>
+					<Add directory="D:/progs/CLion 2021.3.3/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 article_check"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 article_check"/>
+					<CompileFile command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="article_check/fast">
-				<Option output="/home/vover/CLionProjects/article_check/cmake-build-debug/article_check" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/vover/CLionProjects/article_check/cmake-build-debug"/>
+				<Option output="D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/article_check.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/include/x86_64-linux-gnu"/>
-					<Add directory="/usr/include"/>
+					<Add directory="D:/progs/CLion 2021.3.3/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include"/>
+					<Add directory="D:/progs/CLion 2021.3.3/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../include"/>
+					<Add directory="D:/progs/CLion 2021.3.3/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed"/>
+					<Add directory="D:/progs/CLion 2021.3.3/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 article_check/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vover/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 article_check/fast"/>
+					<CompileFile command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/progs/CLion 2021.3.3/bin/mingw/bin/mingw32-make.exe -f &quot;D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/vover/CLionProjects/article_check/case.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/case.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/case.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/case.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/functions.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/functions.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/functions.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/functions.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/gas_two.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/gas_two.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/gas_two.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/gas_two.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/gnuploting.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/gnuploting.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/gnuploting.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/gnuploting.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/eigenval.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/eigenval.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/eigenval.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/eigenval.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/elcmp.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/elcmp.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/errhandl.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/errhandl.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/errhandl.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/errhandl.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/factor.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/factor.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/factor.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/factor.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/itersolv.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/itersolv.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/itersolv.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/itersolv.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/lastypes.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/lastypes.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/matrix.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/matrix.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/matrix.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/matrix.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/mlsolv.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/mlsolv.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/mlsolv.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/mlsolv.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/operats.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/operats.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/operats.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/operats.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/precond.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/precond.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/precond.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/precond.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/qmatrix.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/qmatrix.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/qmatrix.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/qmatrix.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/rtc.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/rtc.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/rtc.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/rtc.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/vector.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/vector.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/laspack/vector.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/laspack/vector.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/main.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/main.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/residuals.c">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/residuals.c">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/residuals.h">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/residuals.h">
 			<Option target="article_check"/>
 		</Unit>
-		<Unit filename="/home/vover/CLionProjects/article_check/CMakeLists.txt">
+		<Unit filename="D:/vladimir.nazarov_old/CLionProjects/article_check/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

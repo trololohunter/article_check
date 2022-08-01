@@ -23,7 +23,7 @@ void param_dif (P_gas *p_d)
 {
     p_d->Segm_X = 2*M_PI;
     p_d->Segm_Y = 2*M_PI;
-    p_d->Segm_T = 100;
+    p_d->Segm_T = 10;
     p_d->mu = 1;
     p_d->p_ro = 1;
     p_d->omega = 1;
@@ -42,7 +42,7 @@ void param_she_step(P_she *p_s, P_gas p_d, int it_t, int it_sp)
     p_s->h_x = p_d.Segm_X / p_s->M_x;
     p_s->h_y = p_d.Segm_Y / p_s->M_y;
     p_s->tau = p_d.Segm_T / p_s->N;
-    p_s->Dim = (p_s->M_x + 1) * (p_s->M_y + 1);
+    p_s->Dim = (p_s->M_x + 1) * (p_s->M_y + 1) - 1;
     p_s->vecDim = 3 * p_s->M_x * p_s->M_y + p_s->M_x + p_s->M_y;
 
     return;
@@ -119,11 +119,11 @@ int son (int i, int j, P_she *p_s) //  the status of the node
         //    return 9; = a; y = b
     if (i == 0 && j > 0 && j < p_s->M_x-1) // x in; y = 0
         return 3;
-    if (i == p_s->M_y && j > 0 && j < p_s->M_x-1) // x in; y = b
+    if (i == p_s->M_y && j >= 0 && j < p_s->M_x) // x in; y = b
         return 4;
-    if (i > 0 && i < p_s->M_y-1 && j == 0) // x = 0; y in
+    if (i > 0 && i < p_s->M_y && j == 0) // x = 0; y in
         return 1;
-    if (i > 0 && i < p_s->M_y-1 && j == p_s->M_x) // x = a; y in
+    if (i >= 0 && i < p_s->M_y && j == p_s->M_x) // x = a; y in
         return 2;
    // if (i == 0 && j > p_s->M_x/2-1 && j < p_s->M_x)
     //    return 10;
@@ -135,10 +135,21 @@ int son (int i, int j, P_she *p_s) //  the status of the node
     return 0; // internal mesh node
 }
 
+void print_vector_int(int* a, int n, int start)
+{
+    int i;
+    printf("\n\n start print vector\n");
+    for (i = 0; i < n; ++i)
+        printf ("%d \n", a[start + i]);
+    printf("let's going on\n\n\n");
+
+    return;
+}
+
 void print_vector(double* a, int n, int start)
 {
     int i;
-
+    printf("\n\n start print vector\n");
     for (i = 0; i < n; ++i)
         printf ("%e \n", a[start + i]);
     printf("let's going on\n\n\n");
@@ -155,7 +166,7 @@ void Setka (int *st, P_she *p_s)
     for (i = 0; i < p_s->M_y; ++i) {
         for (j = 0; j < p_s->M_x; ++j) {
             st[k] = son(i, j, p_s);
- //         printf("%d \t", st[k]);
+          printf("k=%d  \t st[k] = %d \n", k, st[k]);
             ++k;
         }
 //        printf("\n");
@@ -163,16 +174,36 @@ void Setka (int *st, P_she *p_s)
 
     for (i = 0; i < p_s->M_y; ++i) {
         st[k] = son(i, p_s->M_x, p_s);
+        printf("k=%d  \t st[k] = %d \n", k, st[k]);
         ++k;
     }
 
     for (j = 0; j < p_s->M_x; ++j) {
         st[k] = son(p_s->M_y, j, p_s);
+        printf("k=%d  \t st[k] = %d \n", k, st[k]);
         ++k;
     }
 //    sleep(10);
     return;
 
+}
+
+void printl_t_c (T_const t_c) {
+    printf("t_c.thx     = %e \n", t_c.thx);
+    printf("t_c.thy     = %e \n",    t_c.thy);
+    printf("t_c.thx2    = %e \n",   t_c.thx2);
+    printf("t_c.thy2    = %e \n",   t_c.thy2);
+    printf("t_c.thxx43  = %e \n",   t_c.thxx43);
+    printf("t_c.thyy43  = %e \n",    t_c.thyy43);
+    printf("t_c.thxxmu  = %e \n",   t_c.thxxmu);
+    printf("t_c.thyymu  = %e \n",    t_c.thyymu);
+    printf("t_c.thxy    = %e \n",    t_c.thxy);
+    printf("t_c.crohx   = %e \n",  t_c.crohx);
+    printf("t_c.crohy   = %e \n",    t_c.crohy);
+    printf("t_c.ro0hx   = %e \n",    t_c.ro0hx);
+    printf("t_c.ro0hy   = %e \n",    t_c.ro0hy);
+    printf("\n\n");
+    //t_c->Max = thx
 }
 
 void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
@@ -196,17 +227,25 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
 
     fp = fopen ("norma.txt","w");
 
-    if (SMOOTH_SOLUTION == 1) //first_fill(V1, V2, G, p_s, p_d.omega, u1, u2, g);
-        first_fill_check(V1, V2, P, p_s, p_d.omega);
-    else first_fill___ (V1, V2, P, p_s, p_d.omega);
+    first_fill_check(V1, V2, P, p_s, p_d.omega);
+
+    print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
+    print_vector(V2, p_s.M_x * p_s.M_y + p_s.M_x, 0);
+    print_vector(P, p_s.M_x * p_s.M_y, 0);
 
     param_t_const(&t_c, p_s, p_d);
+    printl_t_c (t_c);
     SetRTCAccuracy(EPS);
 
-    run_gnuplot(p_s, V1, V2, P, 0);
-    residual_Ch(V1, V2, P, p_s, &n_s, u1, u2, g);
-    start_norm = sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm);
-    now_norm = start_norm;
+    if (DEBUG == 1) {
+        print_vector_int(st, p_s.Dim, 0);
+        printf("Dim = %d \t vecDim = %d \n\n", p_s.Dim, p_s.vecDim);
+    }
+
+    //run_gnuplot(p_s, V1, V2, P, 0);
+    //residual_Ch(V1, V2, P, p_s, &n_s, u1, u2, g);
+    //start_norm = sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm);
+    //now_norm = start_norm;
 
     for (k = 1; k < p_s.N + 1; ++k) {
     /*k = 0;
@@ -228,12 +267,16 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
         //printf("%lf \n", GG);
         param_MUM_const(&m_c, p_s, GG, p_d);
 */
-        for (size_t i = 0; i < p_s.Dim-1; ++i)
-        { //rewrite
+        for (size_t i = 0; i < p_s.M_y * p_s.M_x; ++i)
+        {
             V_SetCmp(&x, 3 * i + 1, P[i]);
             V_SetCmp(&x, 3 * i + 2, V1[i]);
             V_SetCmp(&x, 3 * i + 3, V2[i]);
         }
+        for (size_t i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+            V_SetCmp(&x, i+1, V1[i]);
+        for (size_t i =p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim-1; ++i)
+            V_SetCmp(&x, i+1, V2[i-p_s.M_y]);
 
 
         for (m = 0; m < p_s.Dim-1; ++m)
@@ -291,14 +334,24 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
             ++mm;
         }
 
-        CGSIter(&A, &x, &b, MAX_ITER, SSORPrecond, 1);
+        //CGSIter(&A, &x, &b, MAX_ITER, SSORPrecond, 1);
+        //CGSIter(&A, &x, &b, MAX_ITER, NULL, 1);
+        JacobiIter(&A, &x, &b, MAX_ITER, NULL, 1);
 
-        for (size_t i = 0; i < p_s.Dim; ++i)
+        for (size_t i = 0; i < p_s.M_y * p_s.M_x; ++i)
         {
             P[i] = V_GetCmp(&x, 3 * i + 1);
-            V1[i] = V_GetCmp(&x, 3 * i + 1 + 1);
-            V2[i] = V_GetCmp(&x, 3 * i + 2 + 1);
+            V1[i] = V_GetCmp(&x, 3 * i + 2);
+            V2[i] = V_GetCmp(&x, 3 * i + 3);
         }
+        for (size_t i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+            V1[i] = V_GetCmp(&x, i+1);
+        for (size_t i = p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim-1; ++i)
+            V2[i-p_s.M_y+1] = V_GetCmp(&x, i+1);
+
+        print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
+        print_vector(V2, p_s.M_x * p_s.M_y + p_s.M_x, 0);
+        print_vector(P, p_s.M_x * p_s.M_y, 0);
 
         for (m = 0; m < p_s.Dim; ++m)
         {
@@ -313,11 +366,11 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
         V_Destr(&b);
         V_Destr(&x);
 
-        residual_Ch(V1, V2, P, p_s, &n_s, u1, u2, g);
-        fprintf(fp, "%lf \t %lf \n", k*p_s.tau, sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm));
+        //residual_Ch(V1, V2, P, p_s, &n_s, u1, u2, g);
+        //fprintf(fp, "%lf \t %lf \n", k*p_s.tau, sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm));
         //if (SMOOTH_SOLUTION != 1)
         now_norm = sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm);
-        if (k % 20 == 1)    run_gnuplot(p_s, V1, V2, P, k);
+        //if (k % 20 == 1)    run_gnuplot(p_s, V1, V2, P, k);
     }
 
     printf("\n\n time: %lf \n\n", k*p_s.tau);

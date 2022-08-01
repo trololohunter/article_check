@@ -45,8 +45,8 @@ int main() {
     param_dif(&p_d);
 
     //if (SMOOTH_SOLUTION != 1) {
-        clean_png("g");
-        clean_png("u1");
+    //    clean_png("g");
+    //    clean_png("u1");
     //}
 
     k = 0;
@@ -57,9 +57,9 @@ int main() {
             param_she_step(&p_s, p_d, it_t, it_sp);
 
             st = (int*) malloc(p_s.Dim * sizeof(int));
-            P = (double*) malloc(p_s.Dim * sizeof(double));
-            V1 = (double*) malloc(p_s.Dim * sizeof(double));
-            V2 = (double*) malloc(p_s.Dim * sizeof(double));
+            P = (double*) malloc((p_s.Dim - p_s.M_x - p_s.M_y) * sizeof(double));
+            V1 = (double*) malloc((p_s.Dim - p_s.M_y) * sizeof(double));
+            V2 = (double*) malloc((p_s.Dim - p_s.M_x) * sizeof(double));
 
             Setka(st, &p_s);
 

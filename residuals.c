@@ -229,11 +229,33 @@ double residual_W12 (double *V1, double *V2, double *G, P_she p_s, Norm_Step *n_
     return sqrt(Gres);
 }
 
-double residual_Ch_Sokol (double *V1, double *V2, double *G, P_she p_s, Norm_Step *n_s,
+double residual_Ch_Leb (double *V1, double *V2, double *P, P_she p_s, Norm_Step *n_s,
                     func u1, func u2, func ro)
 {
     double V1max = 0, V2max = 0, Gmax = 0;
     int i, j;
+/*
+    for (i = 0; i < p_s->M_y; ++i) {
+        for (j = 0; j < p_s->M_x; ++j) {
+            st[k] = son(i, j, p_s);
+            printf("k=%d  \t st[k] = %d \n", k, st[k]);
+            ++k;
+        }
+//        printf("\n");
+    }
+
+    for (i = 0; i < p_s->M_y; ++i) {
+        st[k] = son(i, p_s->M_x, p_s);
+        printf("k=%d  \t st[k] = %d \n", k, st[k]);
+        ++k;
+    }
+
+    for (j = 0; j < p_s->M_x; ++j) {
+        st[k] = son(p_s->M_y, j, p_s);
+        printf("k=%d  \t st[k] = %d \n", k, st[k]);
+        ++k;
+    }
+ */
 
     for (i = 0; i < p_s.M_y + 1; ++i)
         for (j = 0; j < p_s.M_x + 1; ++j)
@@ -241,7 +263,7 @@ double residual_Ch_Sokol (double *V1, double *V2, double *G, P_she p_s, Norm_Ste
             V1max = (fabs(u1(p_s.N * p_s.tau, j * p_s.h_x, i * p_s.h_y) - V1[i * (p_s.M_x + 1) + j]) > V1max) ? fabs(u1(p_s.N * p_s.tau, j * p_s.h_x, i * p_s.h_y) - V1[i * (p_s.M_x + 1) + j]) : V1max;
             V2max = (fabs(u2(p_s.N * p_s.tau, j * p_s.h_x, i * p_s.h_y) - V2[i * (p_s.M_x + 1) + j]) > V2max) ? fabs(u2(p_s.N * p_s.tau, j * p_s.h_x, i * p_s.h_y) - V2[i * (p_s.M_x + 1) + j]) : V2max;
             if ((j < p_s.M_x) && (i < p_s.M_y))
-            Gmax = (fabs(ro(p_s.N * p_s.tau, j * p_s.h_x + p_s.h_x/2., i * p_s.h_y + p_s.h_y/2.) - G[i * (p_s.M_x + 1) + j]) > Gmax) ? fabs(ro(p_s.N * p_s.tau, j * p_s.h_x + p_s.h_x/2., i * p_s.h_y + p_s.h_y/2.) - G[i * (p_s.M_x + 1) + j]) : Gmax;
+            Gmax = (fabs(ro(p_s.N * p_s.tau, j * p_s.h_x + p_s.h_x/2., i * p_s.h_y + p_s.h_y/2.) - P[i * (p_s.M_x + 1) + j]) > Gmax) ? fabs(ro(p_s.N * p_s.tau, j * p_s.h_x + p_s.h_x/2., i * p_s.h_y + p_s.h_y/2.) - P[i * (p_s.M_x + 1) + j]) : Gmax;
         }
 
     printf ("armadas V1max = %e \t V2max = %e \t Gmax = %e \n", V1max, V2max, Gmax);
@@ -383,4 +405,61 @@ double residial_Ch_ (double *u, double *v, double *p, int u_size, int v_size, in
 
     return (Vmax > Umax) ? Vmax : Umax;
 
+}
+
+
+void residual_matrix_schema (double *u_, double *v_, double *p_, //from previous time layer
+                             double *u, double *v, double *p,   //from current time layer
+                             P_she p_s, P_gas p_d) {
+
+    int u_i = 0, v_i = 0, p_i = 0;
+    double tmp, tmp_u, tmp_v, tmp_p;
+
+    FILE *fp;
+    fp = fopen ("residual_matrix_schema.txt","w");
+
+    for (p_i = 0; p_i < p_s.M_x * p_s.M_y; ++p_i)
+    {
+        tmp_p = p[p_i] - p_[p_i];
+        tmp_u = (p_i+1) % p_s.M_x != 0 ? u[p_i+1] - u[p_i] : -u[p_i];
+        tmp_v = v[p_i + p_s.M_x] - v[p_i];
+        tmp = tmp_p / p_s.tau
+                + p_d.p_ro_0 * tmp_u / p_s.h_x
+                + p_d.p_ro_0 * tmp_v / p_s.h_y;
+        fprintf (fp, "%e \t", tmp);
+        if ((p_i+1) % p_s.M_x == 0)
+            fprintf(fp, "\n");
+    }
+
+    fprintf (fp, "\n\n\n");
+
+    fprintf (fp, "%e \t", u[0]);
+    for (u_i = 1; u_i < p_s.M_x; ++u_i)
+    {
+        tmp = 0;
+
+    }
+
+    for (u_i = 1; u_i < p_s.M_x * p_s.M_y; ++u_i)
+    {
+        tmp = p_d.p_ro_0 * (u[u_i] - u_[u_i]) / p_s.tau
+              + p_d.C_ro * (p[u_i] - p[u_i-1]) / p_s.h_x
+              - p_d.mu * (
+                        4./3. * (u[u_i + 1] - 2 * u[u_i] + u[u_i - 1]) / (p_s.h_x*p_s.h_x)
+                        + 1
+                      )
+                ;
+        if (u_i % p_s.M_x == 0) fprintf (fp, "%e \t", u[u_i]);
+        if ((u_i+1) % p_s.M_x == 0)
+            fprintf(fp, "\n");
+    }
+    for (u_i = p_s.M_x * p_s.M_y; u_i < p_s.M_x * p_s.M_y + p_s.M_y; ++u_i)
+    {
+
+
+    }
+
+    fclose(fp);
+
+    return;
 }

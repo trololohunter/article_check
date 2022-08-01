@@ -430,4 +430,3 @@ double Func_2 (double t, double x, double y, double p_rho, double mu)
 
     return res;
 }
-

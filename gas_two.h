@@ -6,11 +6,11 @@
 #define UNTITLED2_GAS_TWO_H
 
 #include <math.h>
-#include <glob.h>
+//#include <glob.h>
 
-#define zero_spl_x  80 //zero splitting x
-#define zero_spl_y  80
-#define zero_spl_t  2000
+#define zero_spl_x  4 //zero splitting x
+#define zero_spl_y  4
+#define zero_spl_t  4
 
 #define SMOOTH_SOLUTION 1
 #define SOKOL 0
