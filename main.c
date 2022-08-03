@@ -57,9 +57,9 @@ int main() {
             param_she_step(&p_s, p_d, it_t, it_sp);
 
             st = (int*) malloc(p_s.Dim * sizeof(int));
-            P = (double*) malloc((p_s.Dim - p_s.M_x - p_s.M_y) * sizeof(double));
-            V1 = (double*) malloc((p_s.Dim - p_s.M_y) * sizeof(double));
-            V2 = (double*) malloc((p_s.Dim - p_s.M_x) * sizeof(double));
+            P = (double*) malloc((p_s.M_x * p_s.M_y) * sizeof(double));
+            V1 = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_x) * sizeof(double));
+            V2 = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_y) * sizeof(double));
 
             Setka(st, &p_s);
 

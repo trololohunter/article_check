@@ -7,6 +7,11 @@
 #include "laspack/itersolv.h"
 #include "functions.h"
 #include "case.h"
+#include <math.h>
+#include <unistd.h>
+#include "residuals.h"
+#include "laspack/rtc.h"
+#include "gnuploting.h"
 
 typedef struct
 {
@@ -410,9 +415,7 @@ size_t case5 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
 
     tmp = P[m];
     V_SetCmp(B, mm, tmp);
-    if (DEBUG == 1) {
-        printf("case5 Bp mm = %d \t tmp = %e \n\n\n", mm, tmp);
-    }
+
 
     mm++;
 

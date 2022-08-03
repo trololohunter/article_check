@@ -267,6 +267,7 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
         //printf("%lf \n", GG);
         param_MUM_const(&m_c, p_s, GG, p_d);
 */
+
         for (size_t i = 0; i < p_s.M_y * p_s.M_x; ++i)
         {
             V_SetCmp(&x, 3 * i + 1, P[i]);
@@ -274,12 +275,18 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
             V_SetCmp(&x, 3 * i + 3, V2[i]);
         }
         for (size_t i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
-            V_SetCmp(&x, i+1, V1[i]);
-        for (size_t i =p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim-1; ++i)
-            V_SetCmp(&x, i+1, V2[i-p_s.M_y]);
+            V_SetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1, V1[i]);
+        for (size_t i = p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim; ++i)
+            V_SetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1, V2[i-p_s.M_y]);
 
+        if (DEBUG == 1) {
+            printf("x before begin \n");
+            for (size_t i = 1; i < p_s.vecDim + 1; ++i)
+                printf("%e \n", V_GetCmp(&x, i));
+            printf("x before end \n");
+        }
 
-        for (m = 0; m < p_s.Dim-1; ++m)
+        for (m = 0; m < p_s.Dim; ++m)
         {
             param_MM_step(&m_s,mm,p_s.M_x, m);
             switch (st[m])
@@ -334,9 +341,16 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
             ++mm;
         }
 
-        //CGSIter(&A, &x, &b, MAX_ITER, SSORPrecond, 1);
+        if (DEBUG == 1) {
+            printf("b before begin \n");
+            for (size_t i = 1; i < p_s.vecDim + 1; ++i)
+                printf("%e \n", V_GetCmp(&b, i));
+            printf("b before end \n");
+        }
+
+        CGSIter(&A, &x, &b, MAX_ITER, SSORPrecond, 1);
         //CGSIter(&A, &x, &b, MAX_ITER, NULL, 1);
-        JacobiIter(&A, &x, &b, MAX_ITER, NULL, 1);
+        //JacobiIter(&A, &x, &b, MAX_ITER, NULL, 1);
 
         for (size_t i = 0; i < p_s.M_y * p_s.M_x; ++i)
         {
@@ -345,14 +359,19 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
             V2[i] = V_GetCmp(&x, 3 * i + 3);
         }
         for (size_t i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
-            V1[i] = V_GetCmp(&x, i+1);
-        for (size_t i = p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim-1; ++i)
-            V2[i-p_s.M_y+1] = V_GetCmp(&x, i+1);
+            V1[i] = V_GetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1);
+        for (size_t i = p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim; ++i)
+            V2[i-p_s.M_y] = V_GetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1);
 
-        print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
-        print_vector(V2, p_s.M_x * p_s.M_y + p_s.M_x, 0);
-        print_vector(P, p_s.M_x * p_s.M_y, 0);
-
+if (DEBUG == 1) {
+    printf("x after begin \n");
+    for (size_t i = 1; i < p_s.vecDim+1; ++i )
+        printf("%e \n", V_GetCmp(&x, i));
+    printf("x after end \n");
+    print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
+    print_vector(V2, p_s.M_x * p_s.M_y + p_s.M_x, 0);
+    print_vector(P, p_s.M_x * p_s.M_y, 0);
+}
         for (m = 0; m < p_s.Dim; ++m)
         {
             if (fabs(P[m])  < EEPPSS ) P[m] = 0;
