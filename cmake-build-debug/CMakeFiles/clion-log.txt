@@ -1,10 +1,10 @@
-"D:\progs\CLion 2021.3.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" D:\vladimir.nazarov_old\CLionProjects\article_check
+/snap/clion/204/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/vladimir/CLionProjects/article_check -B /home/vladimir/CLionProjects/article_check/cmake-build-debug
 -- The C compiler identification is GNU 11.2.0
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
--- Check for working C compiler: D:/progs/CLion 2021.3.3/bin/mingw/bin/gcc.exe - skipped
+-- Check for working C compiler: /usr/bin/cc - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: D:/vladimir.nazarov_old/CLionProjects/article_check/cmake-build-debug
+-- Build files have been written to: /home/vladimir/CLionProjects/article_check/cmake-build-debug

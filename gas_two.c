@@ -24,7 +24,7 @@ void param_dif (P_gas *p_d)
     p_d->Segm_X = 2*M_PI;
     p_d->Segm_Y = 2*M_PI;
     p_d->Segm_T = 10;
-    p_d->mu = 1;
+    p_d->mu = 0.1;
     p_d->p_ro = 1;
     p_d->omega = 1;
     p_d->p_ro_0 = 1;
@@ -219,13 +219,20 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
 
     double GG = 0;
     double tmp;
-    size_t mm;
+    size_t mm, i = 0;
     int m;
     double start_norm;
     double now_norm;
     FILE *fp;
+    double *P_prev;
+    double *V1_prev;
+    double *V2_prev;
 
     fp = fopen ("norma.txt","w");
+
+    P_prev = (double*) malloc((p_s.M_x * p_s.M_y) * sizeof(double));
+    V1_prev = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_x) * sizeof(double));
+    V2_prev = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_y) * sizeof(double));
 
     first_fill_check(V1, V2, P, p_s, p_d.omega);
 
@@ -268,22 +275,29 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
         param_MUM_const(&m_c, p_s, GG, p_d);
 */
 
-        for (size_t i = 0; i < p_s.M_y * p_s.M_x; ++i)
+        for (i = 0; i < p_s.M_y * p_s.M_x; ++i)
         {
             V_SetCmp(&x, 3 * i + 1, P[i]);
             V_SetCmp(&x, 3 * i + 2, V1[i]);
             V_SetCmp(&x, 3 * i + 3, V2[i]);
         }
-        for (size_t i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+        for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
             V_SetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1, V1[i]);
-        for (size_t i = p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim; ++i)
+        for (i = p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim; ++i)
             V_SetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1, V2[i-p_s.M_y]);
 
         if (DEBUG == 1) {
             printf("x before begin \n");
-            for (size_t i = 1; i < p_s.vecDim + 1; ++i)
+            for (i = 1; i < p_s.vecDim + 1; ++i)
                 printf("%e \n", V_GetCmp(&x, i));
             printf("x before end \n");
+
+            for (i = 1; i < p_s.vecDim + 1; ++i)
+                V_SetCmp(&b, i, 1.);
+            printf("b bbbefore begin \n");
+            for (i = 1; i < p_s.vecDim + 1; ++i)
+                printf("%e \n", V_GetCmp(&b, i));
+            printf("b bbbefore end \n");
         }
 
         for (m = 0; m < p_s.Dim; ++m)
@@ -337,47 +351,64 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
                 }
 
             }
-           // printf("%d \n", m);
+            if (DEBUG == 1) {
+                printf("\n m=%d \t mm=%d \n\n", m, mm);
+                printf("b begin \n");
+                for (i = 1; i < p_s.vecDim + 1; ++i)
+                    printf("%e \n", V_GetCmp(&b, i));
+                printf("b end \n\n");
+            }
             ++mm;
         }
 
         if (DEBUG == 1) {
             printf("b before begin \n");
-            for (size_t i = 1; i < p_s.vecDim + 1; ++i)
+            for (i = 1; i < p_s.vecDim + 1; ++i)
                 printf("%e \n", V_GetCmp(&b, i));
             printf("b before end \n");
+            for (i = 1; i < p_s.vecDim + 1; ++i)
+                printf("%e \n", Q_GetVal(&A, i, 0));
         }
 
         CGSIter(&A, &x, &b, MAX_ITER, SSORPrecond, 1);
-        //CGSIter(&A, &x, &b, MAX_ITER, NULL, 1);
-        //JacobiIter(&A, &x, &b, MAX_ITER, NULL, 1);
 
-        for (size_t i = 0; i < p_s.M_y * p_s.M_x; ++i)
+        for (i = 0; i < p_s.M_y * p_s.M_x; ++i)
+        {
+            P_prev[i] = P[i];
+            V1_prev[i] = V1[i];
+            V2_prev[i] = V2[i];
+        }
+        for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+            V1_prev[i] = V1[i];
+        for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+            V2_prev[i] = V2[i];
+
+        for (i = 0; i < p_s.M_y * p_s.M_x; ++i)
         {
             P[i] = V_GetCmp(&x, 3 * i + 1);
             V1[i] = V_GetCmp(&x, 3 * i + 2);
             V2[i] = V_GetCmp(&x, 3 * i + 3);
         }
-        for (size_t i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+        for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
             V1[i] = V_GetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1);
-        for (size_t i = p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim; ++i)
+        for (i = p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim; ++i)
             V2[i-p_s.M_y] = V_GetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1);
 
 if (DEBUG == 1) {
     printf("x after begin \n");
-    for (size_t i = 1; i < p_s.vecDim+1; ++i )
+    for (i = 1; i < p_s.vecDim+1; ++i )
         printf("%e \n", V_GetCmp(&x, i));
     printf("x after end \n");
     print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
     print_vector(V2, p_s.M_x * p_s.M_y + p_s.M_x, 0);
     print_vector(P, p_s.M_x * p_s.M_y, 0);
 }
-        for (m = 0; m < p_s.Dim; ++m)
+        /*for (m = 0; m < p_s.Dim; ++m)
         {
             if (fabs(P[m])  < EEPPSS ) P[m] = 0;
             if (fabs(V1[m]) < EEPPSS ) V1[m] = 0;
             if (fabs(V2[m]) < EEPPSS ) V2[m] = 0;
-        }
+        }*/
         //usleep(10);
 
 
@@ -388,13 +419,19 @@ if (DEBUG == 1) {
         //residual_Ch(V1, V2, P, p_s, &n_s, u1, u2, g);
         //fprintf(fp, "%lf \t %lf \n", k*p_s.tau, sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm));
         //if (SMOOTH_SOLUTION != 1)
-        now_norm = sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm);
+        //now_norm = sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm);
         //if (k % 20 == 1)    run_gnuplot(p_s, V1, V2, P, k);
+        //if (k == 5)
+        residual_matrix_schema(V1_prev, V2_prev, P_prev, V1, V2, P, p_s, p_d, k);
     }
 
     printf("\n\n time: %lf \n\n", k*p_s.tau);
 
     fclose(fp);
+
+    free(P_prev);
+    free(V1_prev);
+    free(V2_prev);
 
     return;
 }

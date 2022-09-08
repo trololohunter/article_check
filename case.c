@@ -136,15 +136,23 @@ void first_fill_check (double *V1, double *V2, double *P, P_she p_s,
         {
             V1[i * (p_s.M_x) + j] = 0;
             V2[i * (p_s.M_x) + j] = 0;
-            P[i * (p_s.M_x) + j] = 0;
+            P[i * (p_s.M_x) + j] = 1;
+
+            if (i > 1 * p_s.M_y / 3 && i < 2 * p_s.M_y / 3
+                &&
+                j > 1 * p_s.M_x / 3 && j < 2 * p_s.M_x / 3) {
+                V1[i * (p_s.M_x) + j] = 1;
+                V2[i * (p_s.M_x) + j] = 1;
+                //G[i * (p_s.M_x + 1) + j] = 2;
+            }
         }
 
-    V1[3] = 1;
-    V1[9] = 1;
-    V2[5] = 1;
-    V2[14] = 1;
-    P[0] = 1;
-    P[7] = 1;
+    //V1[3] = 1;
+    //V1[9] = 1;
+    //V2[5] = 1;
+    //V2[14] = 1;
+    //P[0] = 1;
+    //P[7] = 1;
 
     for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
         V1[i] = 0;
@@ -173,7 +181,8 @@ size_t case0 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     tmp = P[m];
     V_SetCmp(B, mm, tmp);
     if (DEBUG == 1) {
-        printf("case0 Bp mm = %d \t tmp = %e \n\n\n", mm, tmp);
+        printf("case0 Bp mm = %d \t tmp = %e \n", mm, tmp);
+        printf("case0 Bp %e \n\n", V_GetCmp(B,mm));
     }
 
     mm++;
@@ -199,7 +208,7 @@ size_t case0 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     tmp = ro0 * V1[m];
     V_SetCmp(B, mm, tmp);
     if (DEBUG == 1) {
-        printf("case0 Bv1 mm = %d \t tmp = %e \n\n\n", mm, tmp);
+        printf("case0 Bv1 mm = %d \t tmp = %e \n", mm, tmp);
     }
 
     mm++;
@@ -562,8 +571,8 @@ size_t case8 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     double tmp;
 
     m_s.mmv1R0 = (size_t) 3*p_s.M_x*p_s.M_y + m/(p_s.M_x) + 1;
-    m_s.mmv20R = (size_t) 3*p_s.M_x*p_s.M_y + m - p_s.M_x*(p_s.M_y-1) + p_s.M_y +1;
-    m_s.mmv2LR = (size_t) 3*p_s.M_x*p_s.M_y + m - p_s.M_x*(p_s.M_y-1) + p_s.M_y +2;
+    m_s.mmv20R = (size_t) 3*p_s.M_x*p_s.M_y + m - p_s.M_x*(p_s.M_y-1) + p_s.M_y;
+    m_s.mmv2LR = (size_t) 3*p_s.M_x*p_s.M_y + m - p_s.M_x*(p_s.M_y-1) + p_s.M_y-1;
     m_s.mmv1RL = (size_t) 3*p_s.M_x*p_s.M_y + m/(p_s.M_x);
 
     if (DEBUG == 1) {
@@ -768,7 +777,7 @@ size_t case11 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
     double tmp;
 
     m_s.mmv20R = (size_t) 3*p_s.M_x*p_s.M_y /*+ p_s.M_y */ + m - p_s.M_x*(p_s.M_y-1) + p_s.M_y + 1;
-    m_s.mmv2LR = (size_t) 3*p_s.M_x*p_s.M_y /*+ p_s.M_y */ + m - p_s.M_x*(p_s.M_y-1) + p_s.M_y + 2;
+    m_s.mmv2LR = (size_t) 3*p_s.M_x*p_s.M_y /*+ p_s.M_y */ + m - p_s.M_x*(p_s.M_y-1) + p_s.M_y;
 
     if (DEBUG == 1) {
         printl_m_s(m_s, m);

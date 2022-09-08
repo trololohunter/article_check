@@ -6,7 +6,7 @@
 #define UNTITLED2_GAS_TWO_H
 
 #include <math.h>
-//#include <glob.h>
+#include <glob.h>
 
 #define zero_spl_x  4 //zero splitting x
 #define zero_spl_y  4

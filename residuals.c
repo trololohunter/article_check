@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 #include "residuals.h"
 #include "gas_two.h"
 
@@ -410,13 +411,18 @@ double residial_Ch_ (double *u, double *v, double *p, int u_size, int v_size, in
 
 void residual_matrix_schema (double *u_, double *v_, double *p_, //from previous time layer
                              double *u, double *v, double *p,   //from current time layer
-                             P_she p_s, P_gas p_d) {
+                             P_she p_s, P_gas p_d, int k) {
 
     int u_i = 0, v_i = 0, p_i = 0;
     double tmp, tmp_u, tmp_v, tmp_p;
 
     FILE *fp;
-    fp = fopen ("residual_matrix_schema.txt","w");
+
+    char snum[1];
+    sprintf(snum,"%d",k);
+
+    //fp = fopen (strcat(strncat("residual_matrix_schema_",snum,1),".txt"),"w");
+    fp = fopen ("residual_matrix_schema.txt","a");
 
     for (p_i = 0; p_i < p_s.M_x * p_s.M_y; ++p_i)
     {
@@ -433,6 +439,7 @@ void residual_matrix_schema (double *u_, double *v_, double *p_, //from previous
 
     fprintf (fp, "\n\n\n");
 
+    /*
     fprintf (fp, "%e \t", u[0]);
     for (u_i = 1; u_i < p_s.M_x; ++u_i)
     {
@@ -457,9 +464,55 @@ void residual_matrix_schema (double *u_, double *v_, double *p_, //from previous
     {
 
 
+    }*/
+
+    for (u_i = p_s.M_x + 1; u_i < p_s.M_x * (p_s.M_y - 1); ++u_i)
+    {
+        if (u_i % p_s.M_x == 0) {
+            fprintf(fp, "\n");
+            continue;
+        }
+        tmp = 0;
+        tmp_u = (u_i+1) % p_s.M_x != 0 ? u[p_i+1]: 0;
+        tmp = p_d.p_ro_0*(u[u_i] - u_[u_i])/p_s.tau
+            + p_d.C_ro*(p[u_i]-p[u_i-1])/p_s.h_x
+            - p_d.mu*(
+                    (4./3.)*(tmp_u -2*u[u_i]+u[u_i-1])/(p_s.h_x * p_s.h_x)
+                    +(u[u_i+p_s.M_x] -2*u[u_i]+u[u_i-p_s.M_x])/(p_s.h_y * p_s.h_y)
+                    +(1./3.)*(v[u_i+p_s.M_x]+v[u_i-1]-v[u_i+p_s.M_x-1]-v[u_i])/(p_s.h_x * p_s.h_y)
+                    )
+        ;
+
+        fprintf (fp, "%e \t", tmp);
     }
 
+    fprintf (fp, "\n\n\n");
+
+    for (v_i = p_s.M_x + 1; v_i < p_s.M_x * (p_s.M_y - 1) + p_s.M_x - 1; ++v_i)
+    {
+        if (v_i % p_s.M_x == 0 || v_i % p_s.M_x == p_s.M_x - 1) {
+            fprintf(fp, "\n");
+            continue;
+        }
+        tmp = 0;
+        tmp = p_d.p_ro_0*(v[v_i] - v_[v_i])/p_s.tau
+              + p_d.C_ro*(p[v_i]-p[v_i-p_s.M_x])/p_s.h_y
+              - p_d.mu*(
+                (4./3.)*(v[v_i+p_s.M_x] -2*v[v_i]+v[v_i-p_s.M_x])/(p_s.h_y * p_s.h_y)
+                +(v[v_i+1] -2*v[v_i]+v[v_i-1])/(p_s.h_x * p_s.h_x)
+                +(1./3.)*(u[v_i-p_s.M_x]+u[v_i+1]-u[v_i-p_s.M_x+1]-u[v_i])/(p_s.h_x * p_s.h_y)
+        )
+                ;
+
+        fprintf (fp, "%e \t", tmp);
+    }
+
+    fprintf (fp, "\n\n\n");
+
+
     fclose(fp);
+
+
 
     return;
 }
