@@ -418,8 +418,6 @@ void residual_matrix_schema (double *u_, double *v_, double *p_, //from previous
 
     FILE *fp;
 
-    char snum[1];
-    sprintf(snum,"%d",k);
 
     //fp = fopen (strcat(strncat("residual_matrix_schema_",snum,1),".txt"),"w");
     fp = fopen ("residual_matrix_schema.txt","a");
@@ -473,7 +471,7 @@ void residual_matrix_schema (double *u_, double *v_, double *p_, //from previous
             continue;
         }
         tmp = 0;
-        tmp_u = (u_i+1) % p_s.M_x != 0 ? u[p_i+1]: 0;
+        tmp_u = (u_i+1) % p_s.M_x != 0 ? u[u_i+1]: 0;
         tmp = p_d.p_ro_0*(u[u_i] - u_[u_i])/p_s.tau
             + p_d.C_ro*(p[u_i]-p[u_i-1])/p_s.h_x
             - p_d.mu*(
@@ -490,8 +488,12 @@ void residual_matrix_schema (double *u_, double *v_, double *p_, //from previous
 
     for (v_i = p_s.M_x + 1; v_i < p_s.M_x * (p_s.M_y - 1) + p_s.M_x - 1; ++v_i)
     {
-        if (v_i % p_s.M_x == 0 || v_i % p_s.M_x == p_s.M_x - 1) {
+        if (v_i % p_s.M_x == 0) {
             fprintf(fp, "\n");
+            continue;
+        }
+        if (v_i % p_s.M_x == p_s.M_x - 1) {
+            //fprintf(fp, "\n");
             continue;
         }
         tmp = 0;

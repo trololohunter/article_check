@@ -7,7 +7,7 @@
 
 #include "functions.h"
 
-#define DEBUG 1
+#define DEBUG 2
 
 void first_fill (double *V1, double *V2, double *P, P_she p_s,
                  double w, func u1, func u2, func ro);
