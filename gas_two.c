@@ -19,12 +19,12 @@
 #define MAX_ITER 2000
 
 
-void param_dif (P_gas *p_d)
+void param_dif (P_gas *p_d, double mu)
 {
     p_d->Segm_X = 2*M_PI;
     p_d->Segm_Y = 2*M_PI;
     p_d->Segm_T = 10;
-    p_d->mu = 0.1;
+    p_d->mu = mu;
     p_d->p_ro = 1;
     p_d->omega = 1;
     p_d->p_ro_0 = 1;
@@ -236,10 +236,11 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
 
     first_fill_check(V1, V2, P, p_s, p_d.omega);
 
-    print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
-    print_vector(V2, p_s.M_x * p_s.M_y + p_s.M_x, 0);
-    print_vector(P, p_s.M_x * p_s.M_y, 0);
-
+    if (DEBUG == 1) {
+        print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
+        print_vector(V2, p_s.M_x * p_s.M_y + p_s.M_x, 0);
+        print_vector(P, p_s.M_x * p_s.M_y, 0);
+    }
     param_t_const(&t_c, p_s, p_d);
     printl_t_c (t_c);
     SetRTCAccuracy(EPS);

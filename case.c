@@ -162,6 +162,56 @@ void first_fill_check (double *V1, double *V2, double *P, P_she p_s,
     return;
 }
 
+void first_fill_check_vjump (double *V1, double *V2, double *P, P_she p_s) {
+    int i, j;
+    for (i = 0; i < p_s.M_y; ++i)
+        for (j = 0; j < p_s.M_x; ++j)
+        {
+            V1[i * (p_s.M_x) + j] = 0;
+            V2[i * (p_s.M_x) + j] = 0;
+            P[i * (p_s.M_x) + j] = 1;
+
+            if (i > 2 * p_s.M_y / 5 && i < 3 * p_s.M_y / 5
+                &&
+                j > 2 * p_s.M_x / 5 && j < 3 * p_s.M_x / 5) {
+                V1[i * (p_s.M_x) + j] = 1;
+                V2[i * (p_s.M_x) + j] = 1;
+            }
+        }
+
+
+    for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+        V1[i] = 0;
+    for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_x; ++i)
+        V2[i] = 0;
+
+    return;
+}
+
+void first_fill_check_pjump (double *V1, double *V2, double *P, P_she p_s) {
+    int i, j;
+    for (i = 0; i < p_s.M_y; ++i)
+        for (j = 0; j < p_s.M_x; ++j)
+        {
+            V1[i * (p_s.M_x) + j] = 0;
+            V2[i * (p_s.M_x) + j] = 0;
+            P[i * (p_s.M_x) + j] = 1;
+
+            if (i > 2 * p_s.M_y / 5 && i < 3 * p_s.M_y / 5
+                &&
+                j > 2 * p_s.M_x / 5 && j < 3 * p_s.M_x / 5) {
+                P[i * (p_s.M_x + 1) + j] = 2;
+            }
+        }
+
+    for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+        V1[i] = 0;
+    for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_x; ++i)
+        V2[i] = 0;
+
+    return;
+}
+
 size_t case0 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
               double *V1, double *V2, double *P, int m, P_she p_s, double ro0, size_t mm)
 {

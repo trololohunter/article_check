@@ -16,4 +16,4 @@ add_executable(article_check main.c gas_two.c case.c gas_two.h residuals.h resid
         laspack/lastypes.h
         laspack/precond.h laspack/precond.c
         laspack/rtc.h laspack/rtc.c
-        laspack/elcmp.h gnuploting.h gnuploting.c)
+        laspack/elcmp.h gnuploting.h gnuploting.c exact_fading.h exact_fading.c)

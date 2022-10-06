@@ -16,6 +16,9 @@ void first_fill___ (double *V1, double *V2, double *P, P_she p_s,
 
 void first_fill_check (double *V1, double *V2, double *P, P_she p_s,
                        double w);
+void first_fill_check_vjump (double *V1, double *V2, double *P, P_she p_s);
+void first_fill_check_pjump (double *V1, double *V2, double *P, P_she p_s);
+
 size_t case0 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,
               double *V1, double *V2, double *P, int m, P_she p_s, double ro0, size_t mm);
 size_t case1 (QMatrix_L *A, Vector *B, T_const t_c, MM_step m_s, int k,

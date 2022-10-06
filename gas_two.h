@@ -103,7 +103,7 @@ typedef struct
 
 } MM_step;
 
-void param_dif (P_gas *p_d);
+void param_dif (P_gas *p_d, double mu);
 void param_she_step(P_she *p_s, P_gas p_d, int it_t, int it_sp);
 void param_t_const (T_const *t_c, P_she p_s, P_gas p_d);
 void param_MM_step (MM_step *MM_s, size_t mm, int n, int m);
