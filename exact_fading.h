@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "gas_two.h"
+#include "case.h"
 #include "residuals.h"
 #include "gnuploting.h"
 

@@ -27,7 +27,7 @@ void param_dif (P_gas *p_d, double mu)
     p_d->mu = mu;
     p_d->p_ro = 1;
     p_d->omega = 1;
-    p_d->p_ro_0 = 1;
+    p_d->p_ro_0 = 0.1;
     p_d->C_ro = 1;
 
     return;
@@ -234,9 +234,9 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
     V1_prev = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_x) * sizeof(double));
     V2_prev = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_y) * sizeof(double));
 
-    first_fill_check(V1, V2, P, p_s, p_d.omega);
+    //first_fill_check(V1, V2, P, p_s, p_d.omega);
 
-    if (DEBUG == 1) {
+    if (DEBUG == 1 || DEBUG == 2) {
         print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
         print_vector(V2, p_s.M_x * p_s.M_y + p_s.M_x, 0);
         print_vector(P, p_s.M_x * p_s.M_y, 0);
@@ -417,13 +417,14 @@ if (DEBUG == 1) {
         V_Destr(&b);
         V_Destr(&x);
 
-        //residual_Ch(V1, V2, P, p_s, &n_s, u1, u2, g);
-        //fprintf(fp, "%lf \t %lf \n", k*p_s.tau, sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm));
+        residual_Ch(V1, V2, P, p_s, &n_s, u1, u2, g);
+        fprintf(fp, "%lf \t %lf \n", k*p_s.tau, sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm));
         //if (SMOOTH_SOLUTION != 1)
         //now_norm = sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm);
         //if (k % 20 == 1)    run_gnuplot(p_s, V1, V2, P, k);
         //if (k == 5)
-        residual_matrix_schema(V1_prev, V2_prev, P_prev, V1, V2, P, p_s, p_d, k);
+        if (DEBUG == 1)
+                residual_matrix_schema(V1_prev, V2_prev, P_prev, V1, V2, P, p_s, p_d, k);
     }
 
     printf("\n\n time: %lf \n\n", k*p_s.tau);

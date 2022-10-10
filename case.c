@@ -2,14 +2,8 @@
 // Created by vover on 3/26/18.
 //
 
-#include <stdio.h>
-#include "gas_two.h"
-#include "laspack/itersolv.h"
-#include "functions.h"
+
 #include "case.h"
-#include <math.h>
-#include <unistd.h>
-#include "residuals.h"
 #include "laspack/rtc.h"
 #include "gnuploting.h"
 
@@ -173,7 +167,8 @@ void first_fill_check_vjump (double *V1, double *V2, double *P, P_she p_s) {
 
             if (i > 2 * p_s.M_y / 5 && i < 3 * p_s.M_y / 5
                 &&
-                j > 2 * p_s.M_x / 5 && j < 3 * p_s.M_x / 5) {
+                j > 2 * p_s.M_x / 5 && j < 3 * p_s.M_x / 5)
+            {
                 V1[i * (p_s.M_x) + j] = 1;
                 V2[i * (p_s.M_x) + j] = 1;
             }
@@ -199,8 +194,10 @@ void first_fill_check_pjump (double *V1, double *V2, double *P, P_she p_s) {
 
             if (i > 2 * p_s.M_y / 5 && i < 3 * p_s.M_y / 5
                 &&
-                j > 2 * p_s.M_x / 5 && j < 3 * p_s.M_x / 5) {
-                P[i * (p_s.M_x + 1) + j] = 2;
+                j > 2 * p_s.M_x / 5 && j < 3 * p_s.M_x / 5)
+            {
+                printf ("\n i = %d \t j = %d\n", i, j);
+                P[i * (p_s.M_x) + j] = 2;
             }
         }
 

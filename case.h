@@ -6,8 +6,15 @@
 #define UNTITLED2_CASE_H
 
 #include "functions.h"
+#include <stdio.h>
+#include "gas_two.h"
+#include "laspack/itersolv.h"
+#include "functions.h"
+#include <math.h>
+#include <unistd.h>
+#include "residuals.h"
 
-#define DEBUG 2
+#define DEBUG 3
 
 void first_fill (double *V1, double *V2, double *P, P_she p_s,
                  double w, func u1, func u2, func ro);

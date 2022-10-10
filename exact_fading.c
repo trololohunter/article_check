@@ -19,7 +19,7 @@ void article_check() {
 
     FILE *f;
 
-    param_dif(&p_d, 0.1);
+    param_dif(&p_d, 1);
 
 
     param_she_step(&p_s, p_d, 1, 1);
@@ -30,6 +30,8 @@ void article_check() {
     V2 = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_y) * sizeof(double));
 
     Setka(st, &p_s);
+
+    first_fill_check_pjump(V1, V2, P, p_s);
 
     Sxema(P, V1, V2, st, p_s, p_d);
 

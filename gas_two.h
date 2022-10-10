@@ -8,9 +8,9 @@
 #include <math.h>
 #include <glob.h>
 
-#define zero_spl_x  32 //zero splitting x
-#define zero_spl_y  32
-#define zero_spl_t  32
+#define zero_spl_x  64 //zero splitting x
+#define zero_spl_y  64
+#define zero_spl_t  64
 
 #define SMOOTH_SOLUTION 1
 #define SOKOL 0

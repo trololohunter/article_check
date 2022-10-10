@@ -39,8 +39,8 @@ double residual_Ch (double *V1, double *V2, double *G, P_she p_s, Norm_Step *n_s
     double V1max = 0, V2max = 0, Gmax = 0;
     int i, j;
 
-    for (i = 0; i < p_s.M_y + 1; ++i)
-        for (j = 0; j < p_s.M_x + 1; ++j)
+    for (i = 0; i < p_s.M_y; ++i)
+        for (j = 0; j < p_s.M_x; ++j)
         {
             V1max = (fabs(u1(p_s.N * p_s.tau, j * p_s.h_x, i * p_s.h_y) - V1[i * (p_s.M_x + 1) + j]) > V1max) ? fabs(u1(p_s.N * p_s.tau, j * p_s.h_x, i * p_s.h_y) - V1[i * (p_s.M_x + 1) + j]) : V1max;
             V2max = (fabs(u2(p_s.N * p_s.tau, j * p_s.h_x, i * p_s.h_y) - V2[i * (p_s.M_x + 1) + j]) > V2max) ? fabs(u2(p_s.N * p_s.tau, j * p_s.h_x, i * p_s.h_y) - V2[i * (p_s.M_x + 1) + j]) : V2max;
