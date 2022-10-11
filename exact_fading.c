@@ -33,7 +33,7 @@ void article_check() {
 
     first_fill_check_pjump(V1, V2, P, p_s);
 
-    Sxema(P, V1, V2, st, p_s, p_d);
+    Sxema_particularT (P, V1, V2, st, p_s, p_d);
 
     printf("asdfsdfa \n M_x = %d \n M_y = %d \n N   = %d \n", p_s.M_x, p_s.M_y, p_s.N);
 
@@ -48,6 +48,36 @@ void article_check() {
 
 void T_mu_jump() {
 
+    P_gas p_d;
+    P_she p_s;
+    double *P;
+    double *V1;
+    double *V2;
+    int *st;
+
+    FILE *f;
+
+    param_dif(&p_d, 1);
+
+
+    param_she_step(&p_s, p_d, 1, 1);
+
+    st = (int*) malloc(p_s.Dim * sizeof(int));
+    P = (double*) malloc((p_s.M_x * p_s.M_y) * sizeof(double));
+    V1 = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_x) * sizeof(double));
+    V2 = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_y) * sizeof(double));
+
+    Setka(st, &p_s);
+
+    first_fill_check_pjump(V1, V2, P, p_s);
+
+    Sxema_fading_in_q_times(P, V1, V2, st, p_s, p_d);
+
+    printf("asdfsdfa \n M_x = %d \n M_y = %d \n N   = %d \n", p_s.M_x, p_s.M_y, p_s.N);
+
+    free(V1);
+    free(V2);
+    free(P);
 
     return;
 }

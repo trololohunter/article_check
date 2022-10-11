@@ -2,7 +2,8 @@
 
 int main() {
 
-    article_check();
+    //article_check();
+    T_mu_jump();
 
     return 0;
 }

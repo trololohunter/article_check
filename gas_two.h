@@ -108,6 +108,7 @@ void param_she_step(P_she *p_s, P_gas p_d, int it_t, int it_sp);
 void param_t_const (T_const *t_c, P_she p_s, P_gas p_d);
 void param_MM_step (MM_step *MM_s, size_t mm, int n, int m);
 void Setka (int *st, P_she *p_s);
-void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d);
+void Sxema_particularT (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d);
+void Sxema_fading_in_q_times (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d);
 
 #endif //UNTITLED2_GAS_TWO_H

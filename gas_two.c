@@ -17,6 +17,7 @@
 #define EPS 1e-8
 #define EEPPSS 1e-15
 #define MAX_ITER 2000
+#define FADING_IN_Q_TIMES 1000
 
 
 void param_dif (P_gas *p_d, double mu)
@@ -206,7 +207,7 @@ void printl_t_c (T_const t_c) {
     //t_c->Max = thx
 }
 
-void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
+void Sxema_particularT  (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
 {
     int k;
 
@@ -217,7 +218,6 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
     MM_step m_s;
     Norm_Step n_s;
 
-    double GG = 0;
     double tmp;
     size_t mm, i = 0;
     int m;
@@ -234,7 +234,6 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
     V1_prev = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_x) * sizeof(double));
     V2_prev = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_y) * sizeof(double));
 
-    //first_fill_check(V1, V2, P, p_s, p_d.omega);
 
     if (DEBUG == 1 || DEBUG == 2) {
         print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
@@ -250,31 +249,13 @@ void Sxema (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
         printf("Dim = %d \t vecDim = %d \n\n", p_s.Dim, p_s.vecDim);
     }
 
-    //run_gnuplot(p_s, V1, V2, P, 0);
-    //residual_Ch(V1, V2, P, p_s, &n_s, u1, u2, g);
-    //start_norm = sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm);
-    //now_norm = start_norm;
-
     for (k = 1; k < p_s.N + 1; ++k) {
-    /*k = 0;
-    while (now_norm > start_norm * 0.001)
-    {
-        ++k;*/
+
         mm = 1;
 
         Q_Constr(&A, "A", (size_t) p_s.vecDim, False, Rowws, Normal, True);
         V_Constr(&b, "b", (size_t) p_s.vecDim, Normal, True);
         V_Constr(&x, "x", (size_t) p_s.vecDim, Normal, True);
-
- /*       GG = -1000000;
-        for (m = 0; m < p_s.Dim; ++m)
-        {
-//            printf("%lf \n", GG);
-            if (exp(-G[m]) > GG) GG = exp(-G[m]);
-        }
-        //printf("%lf \n", GG);
-        param_MUM_const(&m_c, p_s, GG, p_d);
-*/
 
         for (i = 0; i < p_s.M_y * p_s.M_x; ++i)
         {
@@ -426,6 +407,233 @@ if (DEBUG == 1) {
         if (DEBUG == 1)
                 residual_matrix_schema(V1_prev, V2_prev, P_prev, V1, V2, P, p_s, p_d, k);
     }
+
+    printf("\n\n time: %lf \n\n", k*p_s.tau);
+
+    fclose(fp);
+
+    free(P_prev);
+    free(V1_prev);
+    free(V2_prev);
+
+    return;
+}
+
+
+
+void Sxema_fading_in_q_times  (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
+{
+    int k;
+
+    QMatrix_L A;
+    Vector b, x;
+
+    T_const t_c;
+    MM_step m_s;
+    Norm_Step n_s;
+
+    double GG = 0;
+    double tmp;
+    size_t mm, i = 0;
+    int m;
+    double start_norm;
+    double now_norm;
+    FILE *fp;
+    double *P_prev;
+    double *V1_prev;
+    double *V2_prev;
+
+    fp = fopen ("norma.txt","w");
+
+    P_prev = (double*) malloc((p_s.M_x * p_s.M_y) * sizeof(double));
+    V1_prev = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_x) * sizeof(double));
+    V2_prev = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_y) * sizeof(double));
+
+
+    if (DEBUG == 1 || DEBUG == 2) {
+        print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
+        print_vector(V2, p_s.M_x * p_s.M_y + p_s.M_x, 0);
+        print_vector(P, p_s.M_x * p_s.M_y, 0);
+    }
+    param_t_const(&t_c, p_s, p_d);
+    printl_t_c (t_c);
+    SetRTCAccuracy(EPS);
+
+    if (DEBUG == 1) {
+        print_vector_int(st, p_s.Dim, 0);
+        printf("Dim = %d \t vecDim = %d \n\n", p_s.Dim, p_s.vecDim);
+    }
+
+    p_s.tau = 0.1;
+    k = 0;
+        do
+        {
+            ++k;
+        mm = 1;
+
+        Q_Constr(&A, "A", (size_t) p_s.vecDim, False, Rowws, Normal, True);
+        V_Constr(&b, "b", (size_t) p_s.vecDim, Normal, True);
+        V_Constr(&x, "x", (size_t) p_s.vecDim, Normal, True);
+
+        /*       GG = -1000000;
+               for (m = 0; m < p_s.Dim; ++m)
+               {
+       //            printf("%lf \n", GG);
+                   if (exp(-G[m]) > GG) GG = exp(-G[m]);
+               }
+               //printf("%lf \n", GG);
+               param_MUM_const(&m_c, p_s, GG, p_d);
+       */
+
+        for (i = 0; i < p_s.M_y * p_s.M_x; ++i)
+        {
+            V_SetCmp(&x, 3 * i + 1, P[i]);
+            V_SetCmp(&x, 3 * i + 2, V1[i]);
+            V_SetCmp(&x, 3 * i + 3, V2[i]);
+        }
+        for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+            V_SetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1, V1[i]);
+        for (i = p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim; ++i)
+            V_SetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1, V2[i-p_s.M_y]);
+
+        if (DEBUG == 1) {
+            printf("x before begin \n");
+            for (i = 1; i < p_s.vecDim + 1; ++i)
+                printf("%e \n", V_GetCmp(&x, i));
+            printf("x before end \n");
+
+            for (i = 1; i < p_s.vecDim + 1; ++i)
+                V_SetCmp(&b, i, 1.);
+            printf("b bbbefore begin \n");
+            for (i = 1; i < p_s.vecDim + 1; ++i)
+                printf("%e \n", V_GetCmp(&b, i));
+            printf("b bbbefore end \n");
+        }
+
+        for (m = 0; m < p_s.Dim; ++m)
+        {
+            param_MM_step(&m_s,mm,p_s.M_x, m);
+            switch (st[m])
+            {
+                case 0:
+                    mm = case0(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                case 1:
+                    mm = case1(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                case 2:
+                    mm = case2(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                case 3:
+                    mm = case3(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                case 4:
+                    mm = case4(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                case 5:
+                    mm = case5(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                case 6:
+                    mm = case6(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                case 7:
+                    mm = case7(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                case 8:
+                    mm = case8(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                    /*case 9:
+                        mm = case0(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                        break;
+                    case 10:
+                        mm = case10(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                        break; */
+                case 11:
+                    mm = case11(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                case 12:
+                    mm = case12(&A, &b, t_c, m_s, k, V1, V2, P, m, p_s, p_d.p_ro_0, mm);
+                    break;
+                default:
+                {
+                    printf("FATAL ERROR: unknown type of node");
+                    exit(1);
+                }
+
+            }
+            if (DEBUG == 1) {
+                printf("\n m=%d \t mm=%d \n\n", m, mm);
+                printf("b begin \n");
+                for (i = 1; i < p_s.vecDim + 1; ++i)
+                    printf("%e \n", V_GetCmp(&b, i));
+                printf("b end \n\n");
+            }
+            ++mm;
+        }
+
+        if (DEBUG == 1) {
+            printf("b before begin \n");
+            for (i = 1; i < p_s.vecDim + 1; ++i)
+                printf("%e \n", V_GetCmp(&b, i));
+            printf("b before end \n");
+            for (i = 1; i < p_s.vecDim + 1; ++i)
+                printf("%e \n", Q_GetVal(&A, i, 0));
+        }
+
+        CGSIter(&A, &x, &b, MAX_ITER, SSORPrecond, 1);
+
+        for (i = 0; i < p_s.M_y * p_s.M_x; ++i)
+        {
+            P_prev[i] = P[i];
+            V1_prev[i] = V1[i];
+            V2_prev[i] = V2[i];
+        }
+        for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+            V1_prev[i] = V1[i];
+        for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+            V2_prev[i] = V2[i];
+
+        for (i = 0; i < p_s.M_y * p_s.M_x; ++i)
+        {
+            P[i] = V_GetCmp(&x, 3 * i + 1);
+            V1[i] = V_GetCmp(&x, 3 * i + 2);
+            V2[i] = V_GetCmp(&x, 3 * i + 3);
+        }
+        for (i = p_s.M_x * p_s.M_y; i < p_s.M_x * p_s.M_y + p_s.M_y; ++i)
+            V1[i] = V_GetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1);
+        for (i = p_s.M_x * p_s.M_y + p_s.M_y; i < p_s.Dim; ++i)
+            V2[i-p_s.M_y] = V_GetCmp(&x, 2*p_s.M_x * p_s.M_y+i+1);
+
+        if (DEBUG == 1) {
+            printf("x after begin \n");
+            for (i = 1; i < p_s.vecDim+1; ++i )
+                printf("%e \n", V_GetCmp(&x, i));
+            printf("x after end \n");
+            print_vector(V1, p_s.M_x * p_s.M_y + p_s.M_y, 0);
+            print_vector(V2, p_s.M_x * p_s.M_y + p_s.M_x, 0);
+            print_vector(P, p_s.M_x * p_s.M_y, 0);
+        }
+        /*for (m = 0; m < p_s.Dim; ++m)
+        {
+            if (fabs(P[m])  < EEPPSS ) P[m] = 0;
+            if (fabs(V1[m]) < EEPPSS ) V1[m] = 0;
+            if (fabs(V2[m]) < EEPPSS ) V2[m] = 0;
+        }*/
+        //usleep(10);
+
+
+        Q_Destr(&A);
+        V_Destr(&b);
+        V_Destr(&x);
+
+        residual_Ch(V1, V2, P, p_s, &n_s, u1, u2, g);
+        tmp = sqrt(n_s.V1norm * n_s.V1norm + n_s.V2norm * n_s.V2norm);
+        fprintf(fp, "%lf \t %lf \n", k*p_s.tau, tmp);
+        now_norm = tmp;
+        if (k == 1) start_norm = tmp;
+        if (DEBUG == 1)
+            residual_matrix_schema(V1_prev, V2_prev, P_prev, V1, V2, P, p_s, p_d, k);
+    } while (now_norm * FADING_IN_Q_TIMES > start_norm);
 
     printf("\n\n time: %lf \n\n", k*p_s.tau);
 
