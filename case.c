@@ -196,7 +196,6 @@ void first_fill_check_pjump (double *V1, double *V2, double *P, P_she p_s) {
                 &&
                 j > 2 * p_s.M_x / 5 && j < 3 * p_s.M_x / 5)
             {
-                printf ("\n i = %d \t j = %d\n", i, j);
                 P[i * (p_s.M_x) + j] = 2;
             }
         }
