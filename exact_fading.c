@@ -4,6 +4,8 @@
 
 #include "exact_fading.h"
 
+#define jump_type 1 //1 - vjump 2 - pjump
+
 void print_norms(FILE *f, double *norm, int it_max);
 
 int deg2inx (int x);
@@ -31,7 +33,10 @@ void article_check() {
 
     Setka(st, &p_s);
 
-    first_fill_check_pjump(V1, V2, P, p_s);
+    if (jump_type == 1)
+        first_fill_check_vjump(V1, V2, P, p_s);
+    if (jump_type == 2)
+        first_fill_check_pjump(V1, V2, P, p_s);
 
     Sxema_particularT (P, V1, V2, st, p_s, p_d);
 
@@ -54,30 +59,41 @@ void T_mu_jump() {
     double *V1;
     double *V2;
     int *st;
+    double T = 0;
+    double mu;
 
     FILE *f;
+    f = fopen("mu_T.txt", "w");
 
-    param_dif(&p_d, 1);
+    for (mu = 0.01; mu < 1.01; mu += 0.01) {
 
+        param_dif(&p_d, mu);
+        param_she_step(&p_s, p_d, 1, 1);
 
-    param_she_step(&p_s, p_d, 1, 1);
+        st = (int *) malloc(p_s.Dim * sizeof(int));
+        P = (double *) malloc((p_s.M_x * p_s.M_y) * sizeof(double));
+        V1 = (double *) malloc((p_s.M_x * p_s.M_y + p_s.M_x) * sizeof(double));
+        V2 = (double *) malloc((p_s.M_x * p_s.M_y + p_s.M_y) * sizeof(double));
 
-    st = (int*) malloc(p_s.Dim * sizeof(int));
-    P = (double*) malloc((p_s.M_x * p_s.M_y) * sizeof(double));
-    V1 = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_x) * sizeof(double));
-    V2 = (double*) malloc((p_s.M_x * p_s.M_y + p_s.M_y) * sizeof(double));
+        Setka(st, &p_s);
 
-    Setka(st, &p_s);
+        if (jump_type == 1)
+            first_fill_check_vjump(V1, V2, P, p_s);
+        if (jump_type == 2)
+            first_fill_check_pjump(V1, V2, P, p_s);
 
-    first_fill_check_pjump(V1, V2, P, p_s);
+        Sxema_fading_in_q_times(P, V1, V2, st, p_s, p_d, &T);
 
-    Sxema_fading_in_q_times(P, V1, V2, st, p_s, p_d);
+        printf("asdfsdfa \n M_x = %d \n M_y = %d \n N   = %d \n T = %lf", p_s.M_x, p_s.M_y, p_s.N, T);
+        fprintf(f, "%lf \t %lf \n", mu, T);
 
-    printf("asdfsdfa \n M_x = %d \n M_y = %d \n N   = %d \n", p_s.M_x, p_s.M_y, p_s.N);
+        free(V1);
+        free(V2);
+        free(P);
 
-    free(V1);
-    free(V2);
-    free(P);
+    }
+
+    fclose(f);
 
     return;
 }

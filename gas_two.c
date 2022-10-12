@@ -167,7 +167,8 @@ void Setka (int *st, P_she *p_s)
     for (i = 0; i < p_s->M_y; ++i) {
         for (j = 0; j < p_s->M_x; ++j) {
             st[k] = son(i, j, p_s);
-          printf("k=%d  \t st[k] = %d \n", k, st[k]);
+            if (DEBUG == 1 || DEBUG == 2)
+                printf("k=%d  \t st[k] = %d \n", k, st[k]);
             ++k;
         }
 //        printf("\n");
@@ -175,13 +176,15 @@ void Setka (int *st, P_she *p_s)
 
     for (i = 0; i < p_s->M_y; ++i) {
         st[k] = son(i, p_s->M_x, p_s);
-        printf("k=%d  \t st[k] = %d \n", k, st[k]);
+        if (DEBUG == 1 || DEBUG == 2)
+            printf("k=%d  \t st[k] = %d \n", k, st[k]);
         ++k;
     }
 
     for (j = 0; j < p_s->M_x; ++j) {
         st[k] = son(p_s->M_y, j, p_s);
-        printf("k=%d  \t st[k] = %d \n", k, st[k]);
+        if (DEBUG == 1 || DEBUG == 2)
+            printf("k=%d  \t st[k] = %d \n", k, st[k]);
         ++k;
     }
 //    sleep(10);
@@ -421,7 +424,7 @@ if (DEBUG == 1) {
 
 
 
-void Sxema_fading_in_q_times  (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d)
+void Sxema_fading_in_q_times  (double *P, double *V1, double *V2, int *st, P_she p_s, P_gas p_d, double *T)
 {
     int k;
 
@@ -475,15 +478,6 @@ void Sxema_fading_in_q_times  (double *P, double *V1, double *V2, int *st, P_she
         V_Constr(&b, "b", (size_t) p_s.vecDim, Normal, True);
         V_Constr(&x, "x", (size_t) p_s.vecDim, Normal, True);
 
-        /*       GG = -1000000;
-               for (m = 0; m < p_s.Dim; ++m)
-               {
-       //            printf("%lf \n", GG);
-                   if (exp(-G[m]) > GG) GG = exp(-G[m]);
-               }
-               //printf("%lf \n", GG);
-               param_MUM_const(&m_c, p_s, GG, p_d);
-       */
 
         for (i = 0; i < p_s.M_y * p_s.M_x; ++i)
         {
@@ -636,6 +630,7 @@ void Sxema_fading_in_q_times  (double *P, double *V1, double *V2, int *st, P_she
     } while (now_norm * FADING_IN_Q_TIMES > start_norm);
 
     printf("\n\n time: %lf \n\n", k*p_s.tau);
+    *(T) = k*p_s.tau;
 
     fclose(fp);
 
